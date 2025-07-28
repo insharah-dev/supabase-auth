@@ -127,14 +127,14 @@ loginWithGoogle &&
     try {
       localStorage.setItem("googleLoginSuccess", "true");
 
-const redirectTo = window.location.hostname === '127.0.0.1'
-? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
+      const redirectTo = window.location.hostname === '127.0.0.1'
+        ? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
 
       const { data, error } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
           redirectTo:
-           redirectTo,
+            redirectTo,
           queryParams: { access_type: "offline", prompt: "consent" },
         },
       });
@@ -154,9 +154,9 @@ loginWithLinkedIn &&
   loginWithLinkedIn.addEventListener("click", async () => {
     try {
       localStorage.setItem("linkedinLoginSuccess", "true");
-     
-const redirectTo = window.location.hostname === '127.0.0.1'
-? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
+
+      const redirectTo = window.location.hostname === '127.0.0.1'
+        ? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
 
       const { data, error } = await client.auth.signInWithOAuth({
         provider: "linkedin_oidc",
@@ -184,8 +184,8 @@ loginWithGithub &&
     try {
       localStorage.setItem("GithubLoginSuccess", "true");
 
-const redirectTo = window.location.hostname === '127.0.0.1'
-? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
+      const redirectTo = window.location.hostname === '127.0.0.1'
+        ? window.location.origin + '/post.html' : window.location.origin + '/supabase-auth/post.html'
       const { data, error } = await client.auth.signInWithOAuth({
         provider: "github",
         options: {
@@ -382,18 +382,18 @@ submitPost &&
       if (authError || !user) throw authError || new Error("user not found.");
 
       const { data, error } = await client
-        .from("users")
+        .from("users information")
         .insert([
           {
-            user_id: user.id,
-            Title: postTitle,
-            Description: postdescrib,
+            users_id: user.id,
+            title: postTitle,
+            description: postdescrib,
           },
         ])
         .select();
 
       if (error) {
-        console.error(error);
+        console.error(error.message);
         Swal.fire({
           icon: "error",
           title: "Post Failed",
@@ -426,6 +426,103 @@ submitPost &&
     }
   });
 
-
 // read all posts
+
+if (window.location.pathname.includes("all-blogs.html")) {
+  try {
+    const readAllPosts = async () => {
+      const { data, error } = await client
+        .from('users information')
+        .select()
+      console.log(data);
+      if (data) {
+        const readPostBox = document.getElementById('readPostBox')
+        console.log(readPostBox);
+        readPostBox.innerHTML = data.map(({ id, title, description }) => `
+  <div class="card" id='${id}' style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">${title}</h5>
+    <p class="card-text">${description}</p>
+   
+  </div>
+</div>`)
+          .join("");
+      }
+    }
+    readAllPosts();
+  }
+  catch (error) {
+    console.log(error);
+  }
+}
+
+
+// read my posts 
+
+const readMyPosts = async () => {
+
+  const { data: { user }
+  } = await client.auth.getUser();
+  console.log(user);
+
+  const { data, error } = await client
+    .from('users information')
+    .select()
+    .eq('users_id', user.id);
+
+  console.log(data);
+  if (data) {
+    const readMyPostBox = document.getElementById('readMyPostBox')
+    readMyPostBox.innerHTML = data.map(({ id, title, description }) => `
+<div class="card" id='${id}' style="width: 18rem;">
+<div class="card-body">
+  <h5 class="card-title">${title}</h5>
+  <p class="card-text">${description}</p>
+</div>
+<div class="d-flex ms-2 pb-2 gap-2">
+<button type="button" onclick='editPost(${id},${title},${description})' class="btn btn-outline-danger">Edit post </button>
+<button type="button" onclick='deletePost(${id})' class="btn btn-outline-danger">Delete post</button>
+</div>
+</div>
+`).join("");
+  }
+  else {
+    console.log(error);
+  }
+}
+
+if (window.location.pathname.includes('my-blogs.html')) {
+  try {
+    readMyPosts();
+  }
+  catch (error) {
+    console.log(error);
+  }
+
+}
+
+// delete posts
+
+async function deletePost(postId) {
+  try{
+const response = await client
+  .from('users information')
+  .delete()
+  .eq('id', postId)
+  if(response){
+    alert('post has been deleted')
+    console.log(response);
+    readMyPosts();
+  }
+  else{
+    console.log(error);
+    
+  }
+  }
+  catch(error){
+    console.log(error);
+  }
+}
+
+
 
