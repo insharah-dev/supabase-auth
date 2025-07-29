@@ -429,6 +429,7 @@ submitPost &&
 // read all posts
 
 if (window.location.pathname.includes("all-blogs.html")) {
+
   try {
     const readAllPosts = async () => {
       const { data, error } = await client
@@ -439,23 +440,29 @@ if (window.location.pathname.includes("all-blogs.html")) {
         const readPostBox = document.getElementById('readPostBox')
         console.log(readPostBox);
         readPostBox.innerHTML = data.map(({ id, title, description }) => `
-  <div class="card container align-items-start" id='${id}'" style="width: 40rem; height: 15rem;">
+  <div class="card my-4 container align-items-start" id='${id}'" style="width: 40rem; height:auto;">
   <div class="card-body">
   <div class="user-profile">
                   <img
                     id="profile-avatar"
-                    src=""
+                    src="https://www.gravatar.com/avatar/?d=mp"
                     alt="Profile Picture"
                     class="avatar"
                   />
                   <div class="user-details">
-                    <h3 id="profile-name">Loading...</h3>
+                    <h3 id="profile-name" class="text-black">Loading...</h3>
                     <p id="profile-email"></p>
                   </div>
                 </div>
-    <h5 class="card-title">${title}</h5>
-    <p class="card-text">${description}</p>
-   
+    <h5 class="card-title mt-4">${title}</h5>
+    <p class="card-text">${description}</p>  
+    <hr/>
+    <div class="d-flex">
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #797979ff;"></i> Like </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #797979ff;"></i> Comment </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #797979ff;"></i> share </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #797979ff;"></i> Save </button>
+    </div>
   </div>
 </div>`)
           .join("");
@@ -486,13 +493,36 @@ const readMyPosts = async () => {
   if (data) {
     const readMyPostBox = document.getElementById('readMyPostBox')
     readMyPostBox.innerHTML = data.map(({ id, title, description }) => `
-<div class="card" id='${id}' style="width: 18rem;">
+<div class="card my-4 container align-items-start" id='${id}'style="width: 40rem; height:auto;">
 <div class="card-body">
-  <h5 class="card-title">${title}</h5>
+ <div class="user-profile">
+                  <img
+                    id="profile-avatar"
+                    src="https://www.gravatar.com/avatar/?d=mp"
+                    alt="Profile Picture"
+                    class="avatar"
+                  />
+                  <div class="user-details">
+                    <h3 id="profile-name" class="text-black">Loading...</h3>
+                    <p id="profile-email"></p>
+                  </div>
+                </div>
+
+  <h5 class="card-title mt-4">${title}</h5>
   <p class="card-text">${description}</p>
 </div>
-<div class="d-flex ms-2 pb-2 gap-2">
-<button type="button" onclick="editPost('${id}','${title}','${description}')" class="btn btn-outline-danger">Edit post </button>
+<hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:2px !important;  margin-bottom:4px !important;">
+
+    <div class="d-flex">
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #797979ff;"></i> Like </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #797979ff;"></i> Comment </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #797979ff;"></i> share </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #797979ff;"></i> Save </button>
+    </div>
+
+<hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:8px !important;  margin-bottom:4px !important;">
+<div class="d-flex justify-content-center pb-3 mt-2 gap-2">
+<button type="button" onclick="editPost('${id}','${title}','${description}')" class="btn ms-2  btn-outline-danger">Edit post </button>
 <button type="button" onclick="deletePost('${id}')" class="btn btn-outline-danger">Delete post</button>
 </div>
 </div>
@@ -518,61 +548,61 @@ if (window.location.pathname.includes('my-blogs.html')) {
 async function deletePost(postId) {
 
 
-const swalWithBootstrapButtons = Swal.mixin({
-  customClass: {
-    confirmButton: "btn btn-success",
-    cancelButton: "btn btn-danger"
-  },
-  buttonsStyling: false
-});
-swalWithBootstrapButtons.fire({
-  title: "Are you sure?",
-  text: "You won't be able to revert this!",
-  icon: "warning",
-  showCancelButton: true,
-  confirmButtonText: "Yes, delete it!",
-  cancelButtonText: "No, cancel!",
-  reverseButtons: true
-}).then(async(result) => {
-  if (result.isConfirmed) {
-  try {
-    const response = await client
-      .from('users information')
-      .delete()
-      .eq('id', postId)
-    if (response) {
-      console.log(response);
-      readMyPosts();
+  const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: "btn btn-success",
+      cancelButton: "btn btn-danger"
+    },
+    buttonsStyling: false
+  });
+  swalWithBootstrapButtons.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonText: "Yes, delete it!",
+    cancelButtonText: "No, cancel!",
+    reverseButtons: true
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        const response = await client
+          .from('users information')
+          .delete()
+          .eq('id', postId)
+        if (response) {
+          console.log(response);
+          readMyPosts();
+        }
+        else {
+          console.log(error);
+
+        }
+      }
+      catch (error) {
+        console.log(error);
+      }
+
+
+      swalWithBootstrapButtons.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+      });
+    } else if (
+      /* Read more about handling dismissals below */
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire({
+        title: "Cancelled",
+        icon: "error"
+      });
     }
-    else {
-      console.log(error);
-
-    }
-  }
-  catch (error) {
-    console.log(error);
-  }
-
-
-    swalWithBootstrapButtons.fire({
-      title: "Deleted!",
-      text: "Your file has been deleted.",
-      icon: "success"
-    });
-  } else if (
-    /* Read more about handling dismissals below */
-    result.dismiss === Swal.DismissReason.cancel
-  ) {
-    swalWithBootstrapButtons.fire({
-      title: "Cancelled",
-      icon: "error"
-    });
-  }
-});
+  });
 
 
 
- 
+
 }
 
 // edit post
@@ -608,24 +638,24 @@ async function editPost(postid, posttitle, postdescribtion) {
         .from('users information')
         .update({ title: posttitle, description: postdescribtion })
         .eq('id', postid)
-         if(error){
-      console.log(error);
-    }
-    else{
-      hideLoader();
-       Swal.fire({
-            title: "Your post has been updated.",
-            icon: "success",
-            draggable: true,
-          });
-      readMyPosts();
-    }
+      if (error) {
+        console.log(error);
+      }
+      else {
+        hideLoader();
+        Swal.fire({
+          title: "Your post has been updated.",
+          icon: "success",
+          draggable: true,
+        });
+        readMyPosts();
+      }
     }
   } catch (error) {
     console.log(error);
   }
-  finally{
-hideLoader();
+  finally {
+    hideLoader();
   }
 }
 

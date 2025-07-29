@@ -357,11 +357,13 @@ input {
   bottom: 42px;
   left: 245px;
 }
-
 .swal2-input{
 margin-left: 17px !important;
     margin-bottom: 10px !important;
 
+}
+.hover:hover{
+  background: #efefef !important;
 }
 
 
