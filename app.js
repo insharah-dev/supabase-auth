@@ -440,28 +440,29 @@ if (window.location.pathname.includes("all-blogs.html")) {
         const readPostBox = document.getElementById('readPostBox')
         console.log(readPostBox);
         readPostBox.innerHTML = data.map(({ id, title, description }) => `
-  <div class="card my-4 container align-items-start" id='${id}'" style="width: 40rem; height:auto;">
+  <div class="card bg-white border-danger  my-4 container align-items-start" id='${id}'" style="width: 40rem; height:auto;">
   <div class="card-body">
   <div class="user-profile">
                   <img
                     id="profile-avatar"
-                    src="https://www.gravatar.com/avatar/?d=mp"
+                    src="https://lh3.googleusercontent.com/a/ACg8ocLYkBCY1aScXhz6IEjyOIyaYJF-o1p-JDvFsb6bRLKE0hiYpXY=s96-c"
                     alt="Profile Picture"
                     class="avatar"
                   />
                   <div class="user-details">
-                    <h3 id="profile-name" class="text-black">Loading...</h3>
-                    <p id="profile-email"></p>
+                    <h3 id="profile-name" class="text-black" style="font-family:'myFont';">Insharah</h3>
+                    <p id="profile-email" class="text-black" style="font-family:'myFont';">insharahdev47@gmail.com</p>
                   </div>
                 </div>
-    <h5 class="card-title mt-4">${title}</h5>
+                 <hr/>
+    <h5 class="card-title " style="font-family:'myFont'; font-size: 25px;">${title}</h5>
     <p class="card-text">${description}</p>  
     <hr/>
-    <div class="d-flex">
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #797979ff;"></i> Like </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #797979ff;"></i> Comment </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #797979ff;"></i> share </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #797979ff;"></i> Save </button>
+    <div class="d-flex" style="font-family:'myFont';">
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #000000ff;"></i> Like </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #000000ff;"></i> Comment </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #000000ff;"></i> share </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #000000ff;"></i> Save </button>
     </div>
   </div>
 </div>`)
@@ -496,28 +497,28 @@ const readMyPosts = async () => {
 <div class="card my-4 container align-items-start" id='${id}'style="width: 40rem; height:auto;">
 <div class="card-body">
  <div class="user-profile">
-                  <img
+                   <img
                     id="profile-avatar"
-                    src="https://www.gravatar.com/avatar/?d=mp"
+                    src="https://lh3.googleusercontent.com/a/ACg8ocLYkBCY1aScXhz6IEjyOIyaYJF-o1p-JDvFsb6bRLKE0hiYpXY=s96-c"
                     alt="Profile Picture"
                     class="avatar"
                   />
                   <div class="user-details">
-                    <h3 id="profile-name" class="text-black">Loading...</h3>
-                    <p id="profile-email"></p>
+                    <h3 id="profile-name" class="text-black" style="font-family:'myFont';">Insharah</h3>
+                    <p id="profile-email" class="text-black" style="font-family:'myFont';">insharahdev47@gmail.com</p>
                   </div>
                 </div>
 
-  <h5 class="card-title mt-4">${title}</h5>
+  <h5 class="card-title mt-4" style="font-family:'myFont'; font-size: 25px;">${title} </h5>
   <p class="card-text">${description}</p>
 </div>
 <hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:2px !important;  margin-bottom:4px !important;">
 
-    <div class="d-flex">
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #797979ff;"></i> Like </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #797979ff;"></i> Comment </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #797979ff;"></i> share </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #797979ff;"></i> Save </button>
+    <div class="d-flex" style="font-family:'myFont';">
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #000000ff;"></i> Like </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #000000ff;"></i> Comment </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #000000ff;"></i> share </button>
+   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #000000ff;"></i> Save </button>
     </div>
 
 <hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:8px !important;  margin-bottom:4px !important;">
