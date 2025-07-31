@@ -630,14 +630,16 @@ async function editPost(postid, posttitle, postdescribtion) {
   const { value: formValues } = await Swal.fire({
     title: "Update Post",
     html: `
-      <div class="d-flex align-items-center mb-2"> 
-        <label><strong>Title:</strong></label>
-        <input id="swal-input1" class="swal2-input" value="${title}">
-      </div>
-      <div class="d-flex align-items-center mb-2"> 
-        <label><strong>Description:</strong></label>
-        <input id="swal-input2" class="swal2-input" value="${description}">
-      </div>
+     
+<div class="d-flex mt-3 flex-column flex-md-row align-items-start align-items-md-center gap-2">
+  <label style="min-width: 100px;"><strong>Title</strong></label>
+  <input id="swal-input1" class="swal2-input mt-0 " value="${title}">
+</div>
+
+<div class="d-flex mt-3 flex-column flex-md-row align-items-start align-items-md-center  gap-2">
+  <label class="ps-3" style="min-width: 100px;"><strong >Description</strong></label>
+  <input id="swal-input2" class="swal2-input mt-0" value="${description}">
+</div>
     `,
     focusConfirm: false,
     preConfirm: () => {
