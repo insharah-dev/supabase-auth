@@ -370,7 +370,6 @@ submitPost &&
       });
       return;
     }
-
     showLoader();
     submitPost.disable = true;
 
@@ -425,7 +424,6 @@ submitPost &&
       submitPost.disable = "false";
     }
   });
-
 // read all posts
 
 if (window.location.pathname.includes("all-blogs.html")) {
@@ -440,8 +438,8 @@ if (window.location.pathname.includes("all-blogs.html")) {
         const readPostBox = document.getElementById('readPostBox')
         console.log(readPostBox);
         readPostBox.innerHTML = data.map(({ id, title, description }) => `
-  <div class="card bg-white border-danger  my-4 container align-items-start" id='${id}'" style="width: 40rem; height:auto;">
-  <div class="card-body">
+  <div class="card bg-white border-danger mb-3 container justify-content-center align-items-start" id='${id}'" style="width: 40rem; height:auto;">
+  <div class="card-body py-3 px-0">
   <div class="user-profile">
                   <img
                     id="profile-avatar"
@@ -456,9 +454,9 @@ if (window.location.pathname.includes("all-blogs.html")) {
                 </div>
                  <hr/>
     <h5 class="card-title " style="font-family:'myFont'; font-size: 25px;">${title}</h5>
-    <p class="card-text">${description}</p>  
+    <p class="card-text" style="font-family:'Libertinus Serif';">${description}</p>  
     <hr/>
-    <div class="d-flex" style="font-family:'myFont';">
+    <div class="d-flex " style="font-family:'myFont';">
    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #000000ff;"></i> Like </button>
    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #000000ff;"></i> Comment </button>
    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #000000ff;"></i> share </button>
@@ -475,80 +473,95 @@ if (window.location.pathname.includes("all-blogs.html")) {
     console.log(error);
   }
 }
-
-
 // read my posts 
 
 const readMyPosts = async () => {
-
-  const { data: { user }
-  } = await client.auth.getUser();
-  console.log(user);
+  const { data: { user } } = await client.auth.getUser();
 
   const { data, error } = await client
     .from('users information')
     .select()
     .eq('users_id', user.id);
 
-  console.log(data);
   if (data) {
-    const readMyPostBox = document.getElementById('readMyPostBox')
-    readMyPostBox.innerHTML = data.map(({ id, title, description }) => `
-<div class="card my-4 container align-items-start" id='${id}'style="width: 40rem; height:auto;">
-<div class="card-body">
- <div class="user-profile">
-                   <img
-                    id="profile-avatar"
-                    src="https://lh3.googleusercontent.com/a/ACg8ocLYkBCY1aScXhz6IEjyOIyaYJF-o1p-JDvFsb6bRLKE0hiYpXY=s96-c"
-                    alt="Profile Picture"
-                    class="avatar"
-                  />
-                  <div class="user-details">
-                    <h3 id="profile-name" class="text-black" style="font-family:'myFont';">Insharah</h3>
-                    <p id="profile-email" class="text-black" style="font-family:'myFont';">insharahdev47@gmail.com</p>
-                  </div>
-                </div>
+    const readMyPostBox = document.getElementById('readMyPostBox');
 
-  <h5 class="card-title mt-4" style="font-family:'myFont'; font-size: 25px;">${title} </h5>
-  <p class="card-text">${description}</p>
-</div>
-<hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:2px !important;  margin-bottom:4px !important;">
+    readMyPostBox.innerHTML = data.map(({ id, title, description }) => {
+      // Correctly encode JSON and escape it for HTML
+      const postData = JSON.stringify({ title, description })
+        .replace(/"/g, "&quot;"); // Escape quotes
 
-    <div class="d-flex" style="font-family:'myFont';">
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2" style="color: #000000ff;"></i> Like </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2" style="color: #000000ff;"></i> Comment </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2" style="color: #000000ff;"></i> share </button>
-   <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2" style="color: #000000ff;"></i> Save </button>
+      return `
+<div class="card bg-white border-danger mb-3 container justify-content-center align-items-start" style="width: 40rem; height:auto; overflow-X:hidden;">
+  <div class="card-body py-3 px-0">
+    <div class="user-profile">
+      <img
+        src="https://lh3.googleusercontent.com/a/ACg8ocLYkBCY1aScXhz6IEjyOIyaYJF-o1p-JDvFsb6bRLKE0hiYpXY=s96-c"
+        alt="Profile Picture"
+        class="avatar"
+      />
+      <div class="user-details">
+        <h3 class="text-black" style="font-family:'myFont';">Insharah</h3>
+        <p class="text-black" style="font-family:'myFont';">insharahdev47@gmail.com</p>
+      </div>
     </div>
 
-<hr style="width:490px; border: 1px solid black; margin-left: 12px !important; margin-top:8px !important;  margin-bottom:4px !important;">
-<div class="d-flex justify-content-center pb-3 mt-2 gap-2">
-<button type="button" onclick="editPost('${id}','${title}','${description}')" class="btn ms-2  btn-outline-danger">Edit post </button>
-<button type="button" onclick="deletePost('${id}')" class="btn btn-outline-danger">Delete post</button>
-</div>
-</div>
-`).join("");
-  }
-  else {
+    <h5 class="card-title mt-4" style="font-family:'myFont'; font-size: 25px;">${title}</h5>
+    <p class="card-text" style="font-family:'Libertinus Serif';">${description}</p>
+  </div>
+  <hr style="width:490px; border: 1px solid black; margin-left: 12px; margin-top:2px; margin-bottom:4px;">
+
+  <div class="d-flex" style="font-family:'myFont';">
+    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-thumbs-up pe-2"></i> Like</button>
+    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-comment fa-flip-horizontal ps-2"></i> Comment</button>
+    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-share pe-2"></i> Share</button>
+    <button class="px-3 py-1 ms-3 bg-transparent border-0 rounded-2 hover"><i class="fa-solid fa-bookmark pe-2"></i> Save</button>
+  </div>
+
+  <hr style="width:490px; border: 1px solid black; margin-left: 12px; margin-top:8px; margin-bottom:4px;">
+  <div class="d-flex justify-content-center pb-3 mt-2 gap-2">
+ <button 
+          type="button"
+          class="btn ms-2 btn-outline-danger edit-post-btn"
+          data-id="${id}"
+          data-post="${postData}"
+        >
+          Edit post
+        </button>
+    <button class="btn btn-outline-danger delete-post-btn" data-id="${id}">Delete post</button>
+  </div>
+</div>`;
+    }).join("");
+
+    // edit button listeners
+    document.querySelectorAll('.edit-post-btn').forEach((button) => {
+      button.addEventListener('click', () => {
+        const id = button.dataset.id;
+        const raw = button.dataset.post.replace(/&quot;/g, '"');
+        const post = JSON.parse(raw);
+
+        editPost(id, post.title, post.description);
+      });
+    });
+
+    // 👇 Delete button listeners
+    document.querySelectorAll('.delete-post-btn').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const id = e.currentTarget.dataset.id;
+        deletePost(id);
+      });
+    });
+  } else {
     console.log(error);
   }
-}
-
+};
 if (window.location.pathname.includes('my-blogs.html')) {
-  try {
-    readMyPosts();
-  }
-  catch (error) {
-    console.log(error);
-  }
-
+  readMyPosts()
 }
 
 // delete posts
 
 async function deletePost(postId) {
-
-
   const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
       confirmButton: "btn btn-success",
@@ -577,14 +590,11 @@ async function deletePost(postId) {
         }
         else {
           console.log(error);
-
         }
       }
       catch (error) {
         console.log(error);
       }
-
-
       swalWithBootstrapButtons.fire({
         title: "Deleted!",
         text: "Your file has been deleted.",
@@ -600,63 +610,70 @@ async function deletePost(postId) {
       });
     }
   });
-
-
-
-
 }
 
 // edit post
 
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;") // escape "
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
 async function editPost(postid, posttitle, postdescribtion) {
   console.log(postid, posttitle, postdescribtion);
+  const title = escapeHtml(decodeURIComponent(posttitle));
+  const description = escapeHtml(decodeURIComponent(postdescribtion));
 
   const { value: formValues } = await Swal.fire({
     title: "Update Post",
     html: `
-   <div class=" d-flex align-items-center"> 
-   <label> <strong>Title: </strong> </label>
-  <input id="swal-input1" class="swal2-input" value = "${posttitle}">
-</div>
-    <div class=" d-flex align-items-center"> 
-   <label> <strong>Description:</strong> </label>
-  <input id="swal-input2" class="swal2-input" value = "${postdescribtion}">
-</div>`,
+      <div class="d-flex align-items-center mb-2"> 
+        <label><strong>Title:</strong></label>
+        <input id="swal-input1" class="swal2-input" value="${title}">
+      </div>
+      <div class="d-flex align-items-center mb-2"> 
+        <label><strong>Description:</strong></label>
+        <input id="swal-input2" class="swal2-input" value="${description}">
+      </div>
+    `,
     focusConfirm: false,
     preConfirm: () => {
       return [
         document.getElementById("swal-input1").value,
-        document.getElementById("swal-input2").value
+        document.getElementById("swal-input2").value,
       ];
-    }
+    },
   });
+
   try {
     if (formValues) {
       showLoader();
-      const [posttitle, postdescribtion] = formValues
-      console.log(posttitle, postdescribtion);
+      const [newTitle, newDescription] = formValues;
+
       const { error } = await client
-        .from('users information')
-        .update({ title: posttitle, description: postdescribtion })
-        .eq('id', postid)
+        .from("users information")
+        .update({ title: newTitle, description: newDescription })
+        .eq("id", postid);
+
       if (error) {
         console.log(error);
-      }
-      else {
+      } else {
         hideLoader();
         Swal.fire({
           title: "Your post has been updated.",
           icon: "success",
-          draggable: true,
         });
         readMyPosts();
       }
     }
   } catch (error) {
     console.log(error);
-  }
-  finally {
+  } finally {
     hideLoader();
   }
 }
+
 
