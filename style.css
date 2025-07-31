@@ -13,16 +13,21 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  width: 100%;
-  height: 100vh; /* Full screen height */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
 }
 
 .navbarSize {
   height: 180px !important;
+}
+
+.navbar-container {
+  justify-content: space-between;
+  width: 100%;
+}
+
+.card {
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .body {
@@ -33,7 +38,6 @@
   justify-content: center;
   align-items: center;
   font-family: "myFont";
-
 }
 
 .borderApp {
@@ -56,15 +60,16 @@
 }
 
 .container {
-  /* / margin-left: 5px; */
   width: 100%;
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 20px;
- 
-  /* backdrop-filter: blur(10px); */
+}
+
+.margin {
+  margin-top: 150px;
 }
 
 .left {
@@ -75,6 +80,8 @@
   width: 100%;
   height: 450px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   border: 1px solid rgb(0, 0, 0);
   padding-left: 20px;
@@ -368,45 +375,39 @@ input {
 .swal2-input {
   margin-left: 17px !important;
   margin-bottom: 10px !important;
-
 }
 
-.swal2-popup ,.swal2-modal, .swal2-show{
+.swal2-popup,
+.swal2-modal,
+.swal2-show {
   font-family: ui-sans-serif;
-    color: #f8f9fa !important;
-    background-color: black !important;
-    border: 1px solid #dc3545 !important;
-    border-radius: 35px !important;
-    box-shadow: 0px 0px 13px #f13434 !important;
+  color: #f8f9fa !important;
+  background-color: black !important;
+  border: 1px solid #dc3545 !important;
+  border-radius: 35px !important;
+  box-shadow: 0px 0px 13px #f13434 !important;
 }
-.swal2-actions{
+
+.swal2-actions {
   gap: 20px !important;
 }
-.swal2-confirm, .swal2-styled{
+
+.swal2-confirm,
+.swal2-styled {
   color: red;
-    display: inline-block;
-    background: transparent;
-    border: 1px solid red;
+  display: inline-block;
+  background: transparent;
+  border: 1px solid red;
 }
-.swal2-cancel{
-    background-color: black;
-    display: inline-block;
-    color: red;
+
+.swal2-cancel {
+  background-color: black;
+  display: inline-block;
+  color: red;
 }
+
 .hover:hover {
   background: #efefef !important;
-}
-
-/* ----------- Navbar Fix ----------- */
-.navbar-container {
-  justify-content: space-between;
-  width: 100%;
-}
-
-.card {
-  max-width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 
@@ -417,64 +418,8 @@ input {
     margin-right: auto;
   }
 }
+
 @media screen and (max-width: 769px) {
-  
-  .container {
-    flex-direction: column;
-    height: auto;
-    gap: 20px;
-    padding: 10px;
-    overflow-x: hidden;
-  }
-.main{
-  width: 100%;
-}
-  .left,
-  .right,
-  .left2,
-  .right2 {
-    width: 100%;
-    height: auto;
-    border-radius: 20px !important;
-    padding: 20px;
-    box-shadow: 0px 0px 8px rgba(255, 164, 164, 0.3);
-  }
-
-  input {
-    width: 100%;
-  }
-
-  .signin,
-  .signin2,
-  .signin3 {
-    margin-left: 0;
-    width: 100%;
-  }
-
-  .btns {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .btn1,
-  .btn2,
-  .btn3 {
-    width: 45px;
-    height: 45px;
-  }
-
-  .eye,
-  .eye2 {
-    position: absolute;
-    right: -120px;
-    top: 55px;
-  }
-
-  .right,
-  .right2 {
-    display: none;
-  }
 
   .mobile-login-btn,
   .mobile-signup-btn {
@@ -493,5 +438,5 @@ input {
   .mobile-login-btn:hover,
   .mobile-signup-btn:hover {
     cursor: pointer;
-  } 
+  }
 }
